@@ -1,0 +1,63 @@
+/* 洲際飛彈's flight (icbm-flight.ts): painted shots cut with camera moves, in a letterbox */
+.icf { position: absolute; inset: 0; overflow: hidden; background: #000; z-index: 30; cursor: pointer; touch-action: none; }
+.icf-shot { position: absolute; inset: 0; opacity: 0; transition: opacity .45s; overflow: hidden; }
+.icf-shot > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.icf[data-shot=s1] .s1, .icf[data-shot=s2] .s2, .icf[data-shot=s3] .s3, .icf[data-shot=s4] .s4, .icf[data-shot=s5] .s5 { opacity: 1; }
+/* letterbox and the titles */
+.icf-bars i { position: absolute; left: 0; right: 0; height: 11%; background: #000; z-index: 5; }
+.icf-bars i:first-child { top: 0; } .icf-bars i:last-child { bottom: 0; }
+.icf-title { position: absolute; left: 0; right: 0; bottom: 13%; z-index: 6; text-align: center; color: #fff; opacity: 0; }
+.icf-title b { display: block; font-size: clamp(26px, 8vmin, 54px); font-weight: 900; letter-spacing: .12em;
+  text-shadow: 0 0 18px rgba(255, 150, 60, .9), 0 3px 0 #000; }
+.icf-title small { display: block; margin-top: 4px; font-size: clamp(13px, 3.4vmin, 20px); letter-spacing: .5em; color: #ffd27a; text-shadow: 0 2px 0 #000; }
+.icf-title.in { animation: icf-title 2s ease-out forwards; }
+@keyframes icf-title { 0% { opacity: 0; transform: scale(1.25); letter-spacing: .4em; } 18% { opacity: 1; transform: scale(1); } 85% { opacity: 1; } 100% { opacity: 0; } }
+.icf-skip { position: absolute; right: 12px; top: calc(11% + 6px); z-index: 7; color: rgba(255,255,255,.65); font-size: 12px; }
+/* 1. night launch: a slow push in and up, the pad shaking, sparks rising */
+.icf[data-shot=s1] .s1 > img { animation: icf-s1 2.4s ease-out forwards, icf-shake .05s 30 alternate; }
+@keyframes icf-s1 { from { transform: scale(1.05) translateY(3%); object-position: 50% 80%; } to { transform: scale(1.35) translateY(-4%); object-position: 50% 30%; } }
+@keyframes icf-shake { to { translate: 2px -2px; } }
+.icf-sparks { position: absolute; inset: 0; pointer-events: none; }
+.icf-sparks i { position: absolute; left: calc(var(--x) * 1%); bottom: -4%; width: calc(4px * var(--s)); height: calc(4px * var(--s)); border-radius: 50%;
+  background: #ffd36a; box-shadow: 0 0 8px 2px #ff8a2a; animation: icf-spark 1.6s var(--d) linear infinite; }
+@keyframes icf-spark { to { transform: translate(calc((var(--x) - 50) * .6px), -110vh); opacity: 0; } }
+.icf-sparks.hot i { background: #fff3c0; box-shadow: 0 0 10px 3px #ff5a1a; animation-duration: .8s; }
+.icf-glow { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; }
+.icf-glow.fire { background: radial-gradient(50% 40% at 50% 75%, rgba(255,160,60,.6), transparent 70%); animation: icf-pulse .18s infinite alternate; }
+@keyframes icf-pulse { to { opacity: .55; } }
+/* 2. orbit: the camera follows the missile across Japan; the sun flares */
+.icf[data-shot=s2] .s2 > img { animation: icf-s2 2.3s ease-in-out forwards; }
+@keyframes icf-s2 { from { transform: scale(1.25); object-position: 0% 60%; } to { transform: scale(1.1); object-position: 100% 30%; } }
+.icf-glow.sun { background: radial-gradient(30% 22% at 88% 48%, rgba(255,230,170,.9), transparent 70%); animation: icf-flare 2.3s ease-in-out forwards; }
+@keyframes icf-flare { 0% { opacity: .2; } 60% { opacity: 1; } 100% { opacity: .6; } }
+/* 3. re-entry: a fast push into the fireball, heavy shake, the heat */
+.icf[data-shot=s3] .s3 > img { animation: icf-s3 1.6s cubic-bezier(.5, 0, 1, .6) forwards, icf-shake2 .04s 40 alternate; }
+@keyframes icf-s3 { from { transform: scale(1); object-position: 60% 50%; } to { transform: scale(1.8); object-position: 62% 55%; } }
+@keyframes icf-shake2 { to { translate: -5px 4px; } }
+.icf-heat { position: absolute; inset: 0; background: radial-gradient(60% 60% at 60% 55%, rgba(255,90,20,.35), transparent 70%); mix-blend-mode: screen; animation: icf-pulse .1s infinite alternate; }
+/* 4. the dive: rushing down at the board, the clouds tearing past */
+.icf[data-shot=s4] .s4 > img { animation: icf-s4 1.2s cubic-bezier(.6, 0, 1, .7) forwards; }
+@keyframes icf-s4 { from { transform: scale(1); } to { transform: scale(2.6); } }
+.icf-speed { position: absolute; inset: -20%; background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.35) 0deg 1.5deg, transparent 1.5deg 9deg);
+  -webkit-mask: radial-gradient(circle, transparent 28%, #000 62%); mask: radial-gradient(circle, transparent 28%, #000 62%); animation: icf-spin 1.2s linear infinite; }
+@keyframes icf-spin { to { transform: rotate(20deg); } }
+/* 5. the target city's own map, zooming on the spot; the blast */
+.icf-map { position: absolute; left: 50%; top: 50%; width: 140vmax; aspect-ratio: 1; transform: translate(calc(-1 * var(--fx) * 100%), calc(-1 * var(--fy) * 100%)) scale(.7);
+  transform-origin: calc(var(--fx) * 100%) calc(var(--fy) * 100%); }
+.icf-map img { width: 100%; height: 100%; display: block; }
+.icf[data-shot=s5] .icf-map { animation: icf-zoom 1.4s cubic-bezier(.3, 0, .2, 1) forwards; }
+@keyframes icf-zoom { to { transform: translate(calc(-1 * var(--fx) * 100%), calc(-1 * var(--fy) * 100%)) scale(1.7); } }
+.icf-aim { position: absolute; left: 50%; top: 50%; width: 24vmin; height: 24vmin; transform: translate(-50%, -50%); border: 3px solid #ff3a3a; border-radius: 50%;
+  box-shadow: 0 0 0 2px #fff, 0 0 24px #f00; animation: icf-aim .35s infinite alternate; }
+.icf-aim::before, .icf-aim::after { content: ''; position: absolute; left: 50%; top: -22%; height: 144%; width: 3px; background: #ff3a3a; transform: translateX(-50%); }
+.icf-aim::after { transform: translateX(-50%) rotate(90deg); }
+@keyframes icf-aim { to { transform: translate(-50%, -50%) scale(.85); } }
+.icf-boom { position: absolute; left: 50%; top: 50%; width: min(125vmin, 920px); aspect-ratio: 1; transform: translate(-50%, -56%); opacity: 0; }
+.icf-boom img { width: 100%; height: 100%; display: block; }
+.icf[data-boom] .icf-boom { opacity: 1; }
+.icf[data-boom] .icf-aim { display: none; }
+.icf[data-boom] .s5 { animation: icf-quake .06s 18 alternate; }
+@keyframes icf-quake { to { transform: translate(6px, -4px); } }
+.icf-flash { position: absolute; inset: 0; z-index: 4; background: #fff; opacity: 0; pointer-events: none; }
+.icf[data-boom] .icf-flash { animation: icf-flash 1s ease-out forwards; }
+@keyframes icf-flash { 0% { opacity: 1; } 100% { opacity: 0; } }

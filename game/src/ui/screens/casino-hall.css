@@ -1,0 +1,14 @@
+/* 大富翁城's hall picker (casino-hall.ts): the original facility picker's row (style.css .msg.fac), the plates as its icons. */
+.ch-box .fac-pic .cs-hplate { width: 66px; height: 66px; border-radius: 14px; }
+.ch-box .fac-cell { -webkit-touch-callout: none; user-select: none; }
+.ch-rule { width: 100%; min-height: 1.4em; margin-top: 6px; font-size: 13px; line-height: 1.4; text-align: center; color: #cfe0ff; }
+.ch-rule.on { color: #ffe36a; text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+@media (max-width: 480px) { .ch-box .fac-pic .cs-hplate { width: 48px; height: 48px; border-radius: 10px; } .ch-box .fac-name { font-size: 11px; letter-spacing: -0.5px; } }
+/* the plate: the drawn art, or the game's sign on a coloured tile while it is missing */
+.cs-hplate { position: relative; display: grid; place-items: center; border-radius: 18px; overflow: hidden; flex: none;
+  box-shadow: 0 0 0 3px #fff, 0 3px 6px rgba(0,0,0,.35); }
+.cs-hplate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.cs-hplate em { font-style: normal; font-size: 40px; line-height: 1; filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+.cs-hplate.t5 { background: linear-gradient(#ff7a7a, #c8202c); } .cs-hplate.t6 { background: linear-gradient(#6ad08a, #1c7a3a); }
+.cs-hplate.t7 { background: linear-gradient(#ffe08a, #d89a10); } .cs-hplate.t8 { background: linear-gradient(#b88aff, #5a2ab0); }
+.cs-hplate.t9 { background: linear-gradient(#7ac8ff, #1a5ab0); }
