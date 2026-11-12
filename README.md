@@ -30,6 +30,10 @@ npx vitest run
 
 原版提取素材与高清重绘素材**不随源码分发**，见 Releases 的 `rich4-assets.tar`；原作素材归大宇资讯所有，仅供学习交流。源码以 GPL-3.0-or-later 授权（见 LICENSE）。
 
+## 来源与致谢
+
+本项目基于 [iam567/rich4-renew-app](https://github.com/iam567/rich4-renew-app) 的重制成果开发：规则引擎的反汇编还原文档（`docs/rules/`）、编辑器与多端工程均源自该项目，在其基础上持续迭代（交易市场、玩法、界面与多端打包等）。
+
 ## 文档
 
 规则还原细节见 [`docs/rules/`](docs/rules/)；更新记录见 [CHANGELOG](CHANGELOG.md)。
